@@ -18,6 +18,7 @@ from django.urls import path
 from hello.views import myView
 from pages.views import index
 from pages.views import about
+from pages.views import squadup
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -26,4 +27,5 @@ urlpatterns = [
     path('hello/', myView),
     path('', index),
     path('about/', about),
+    path('squadup/', squadup),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

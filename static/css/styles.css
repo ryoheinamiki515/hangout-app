@@ -57,6 +57,23 @@ body {
     border: 1px solid rgb(255, 255, 255, 0.6);
     margin-left: 120px;
     margin-right: 120px;
+}
 
+.about h1 {
+    text-align: center;
+    color: black;
+    font-size: 60px;
+}
+
+.squadup h1 {
+    text-align: center;
+    color: black;
+    font-size: 60px;
+}
+
+.squadup map {
+    text-align: center;
+    width:50px;
+    height:400px
 }
 

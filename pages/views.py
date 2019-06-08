@@ -7,3 +7,7 @@ def index(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def squadup(request):
+    return render(request, 'squadup.html')

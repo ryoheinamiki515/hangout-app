@@ -1,3 +1,5 @@
 from django.db import models
 
-# Create your models here.
+
+class Marker(models.Model):
+    marker_coord = models.IntegerField()
