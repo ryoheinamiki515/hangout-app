@@ -21,6 +21,7 @@ from pages.views import about
 from pages.views import squadup
 from django.conf import settings
 from django.conf.urls.static import static
+from pages.views import addMarker, deleteMarker
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +29,6 @@ urlpatterns = [
     path('', index),
     path('about/', about),
     path('squadup/', squadup),
+    path('addMarker/', addMarker),
+    path('deleteMarker/<int:Marker_id>/', deleteMarker),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

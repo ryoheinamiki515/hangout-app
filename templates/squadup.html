@@ -17,8 +17,6 @@
   <hr>
 </div>
 
-<div class="map" id="googleMap" style="margin-left:25px;margin-top:25px;width:750px;height:500px"></div>
-
 <script>
     function getLocation() {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -31,15 +29,79 @@
     function myMap(latloc, lngloc) {
         var mapProp= {
             center:new google.maps.LatLng(latloc,lngloc),
-            zoom:5,
+            zoom:11,
         };
         var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        var marker = new google.maps.Marker({position: {lat: latloc, lng: lngloc}, map: map});
+        var min_lat = 0;
+        var max_lat = 0;
+        var min_lng = 0;
+        var max_lng = 0;
+        var initial = true;
+        {% for coords in marker_nums %}
+            var marker = new google.maps.Marker({position: {lat: {{coords.0}}, lng: {{coords.1}}}, map: map});
+            if (initial) {
+                min_lat = {{ coords.0 }};
+                max_lat = {{ coords.0 }};
+                min_lng = {{ coords.1 }};
+                max_lng = {{ coords.1 }};
+                initial = false;
+            } else {
+                if ({{ coords.0 }} < min_lat) {
+                    min_lat = {{ coords.0 }};
+                }
+                if ({{ coords.0 }} > max_lat) {
+                    max_lat = {{ coords.0 }};
+                }
+                if ({{ coords.1 }} < min_lng) {
+                    min_lng = {{ coords.1 }};
+                }
+                if ({{ coords.1 }} > max_lng) {
+                    max_lng = {{ coords.1 }};
+                }
+            }
+        {% endfor %}
+        var image = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        var marker = new google.maps.Marker({position: {lat: (max_lat + min_lat)/2, lng: (max_lng + min_lng)/2}, map: map, icon: image});
+        map.setCenter({lat: (max_lat + min_lat)/2, lng: (max_lng + min_lng)/2});
+        console.log((max_lat + min_lat)/2);
+        console.log((max_lng + min_lng)/2);
     }
     getLocation();
 
 </script>
+<div class="map" id="googleMap" style="margin-left:25px;margin-top:25px;width:700px;height:450px">
+</div>
 
+<style>
+ul {
+  margin-left: 800px;
+}
+
+</style>
+<ul>
+  {% for marker_item in all_items %}
+    <li>{{ marker_item.marker_coord}}
+        <form action="/deleteMarker/{{marker_item.id}}/"
+            style="display: inline;"
+            method="post">{% csrf_token %}
+            <input type="submit" value="Delete"/>
+        </form>
+    </li>
+  {% endfor %}
+</ul>
+
+<ul>
+    {% for coords in marker_nums %}
+        <li>
+            {{ coords }}
+        </li>
+    {% endfor %}
+</ul>
+
+<form action="/addMarker/" method="post">{% csrf_token %}
+  <input type="text" name="marker_coord"/>
+  <input type="submit" value="Add"/>
+</form>
 
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=&callback=getLocation">
