@@ -10,3 +10,4 @@ Created using Django. I wanted to create a website that people can use to determ
 ![Home Page](https://github.com/ryoheinamiki515/Hangout-App/blob/master/HomeScreen.JPG)
 ### Main Page
 ![Main Page](https://github.com/ryoheinamiki515/Hangout-App/blob/master/MainPage.JPG)
+Able add and remove markers and find the center of multiple markers. More work needed on implementing autocomplete for addresses, searching for nearby places, and making the UI look better.
